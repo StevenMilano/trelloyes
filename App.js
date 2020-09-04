@@ -1,21 +1,34 @@
-import React from 'react';
-import Store from './index.js';
+import React, { Component } from 'react';
 import List from './List.js';
-import Card from './Card.js'
+import './App.css';
 
-function App(Store) {
+class App extends Component {
+ static defaultProps = {
+  store: {
+    list: [],
+    allCards: {},
+  }
+ };
+ render() {
+  const {store} = this.props
   return (
     <main className='App'>
-    <header className="App-header">
-      <h1>Trelloyes!</h1>
-    </header>
-    <div className="App-list"></div>
-      {
-        List(header, cards)
-        Card(title, content)
-      }
+      <header className='App-header'>
+        <h1>Trelloyes!</h1>
+      </header>
+      <div className='App-list'>
+        {Storage.lists.map(list => (
+          <List
+            key={list.id}
+            header={list.header}
+            cards={list.cardIds.map(id => store.allCards[id])}
+          />
+        ))}
+      </div>
     </main>
   );
+ }
+
 }
 
 export default App;
